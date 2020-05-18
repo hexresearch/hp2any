@@ -60,7 +60,7 @@ import Profiling.Heap.Network
 -- Stuff needed only to create a time stamp
 import Data.Time.Format (defaultTimeLocale, formatTime)
 import Data.Time.LocalTime (getZonedTime)
-
+import qualified Data.Time.Format as T
 
 type Trie v = Map ByteString v
 
@@ -175,7 +175,7 @@ profile prog = do
                -- one currently used in heap profiles. Changing it
                -- doesn't hurt anyone, and it makes more sense this
                -- way, so there.
-               , prDate = formatTime defaultTimeLocale "%F %H:%M:%S %Z" zt
+               , prDate = formatTime T.defaultTimeLocale "%F %H:%M:%S %Z" zt
                }
   (fmap.fmap) (\(stop,info) -> (readIORef ref,stop,info)) $ profileCallback prog $ \pkg -> do
     prof <- readIORef ref
